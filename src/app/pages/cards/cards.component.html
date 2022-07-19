@@ -1,0 +1,150 @@
+
+<po-page-list [p-filter]="pageFilter" p-title="Hearthstone">
+    <po-container>
+        <div class="container-header">
+          <po-button
+            p-label="Adicionar Carta"
+            (p-click)="openAddCardModal()"
+          ></po-button>
+        </div>
+        
+
+        <po-table
+          [p-columns]="tableColumns"
+          [p-items]="tableItemsFiltered"
+          [p-loading]="isLoading"
+          [p-actions]="tableActions"
+          [p-actions-right]="true"
+        >
+          <ng-template p-table-cell-template let-column="column" let-row="row">
+              <span *ngIf="column.property === 'type'">{{CardType[row.type]}}</span>
+              <span *ngIf="column.property === 'class'">{{CardClass[row.class]}}</span>
+          </ng-template>
+        </po-table>
+
+    </po-container>
+
+    <po-modal
+      #cardModal
+      [p-title]="modalTitle"
+      p-size="md"
+      class="cardModal"
+      >
+        <po-input 
+          type="text" 
+          [(ngModel)]="cardName" 
+          name="cardName" 
+          p-label="Nome" 
+          class="po-md-6"
+          [p-readonly]="isVisual"
+        ></po-input>
+        <po-input 
+          type="number"
+          p-mask="99"
+          [(ngModel)]="cardPower" 
+          name="cardPower" 
+          p-label="Ataque" 
+          class="po-md-6"
+          [p-readonly]="isVisual"
+        ></po-input>
+        <po-input 
+          type="number" 
+          p-mask="99"
+          [(ngModel)]="cardDefense" 
+          name="cardDefense" 
+          p-label="Defesa" 
+          class="po-md-6"
+          [p-readonly]="isVisual"
+        ></po-input>
+        <po-input 
+          type="number" 
+          p-mask="99"
+          [(ngModel)]="cardMana" 
+          name="cardMana" 
+          p-label="Mana" 
+          class="po-md-6"
+          [p-readonly]="isVisual"
+        ></po-input>
+        <po-select 
+          [ngModel]="cardType"
+          (ngModelChange)="cardType = $event"
+          name="cardType" 
+          p-label="Tipo"
+          [p-options]="cardTypeOption"
+          class="po-md-6"
+          [p-readonly]="isVisualize"
+        ></po-select>
+        <po-select 
+          [ngModel]="cardClass"
+          (ngModelChange)="cardClass = $event"
+          name="cardClass" 
+          p-label="Classe"
+          [p-options]="cardClassOption"
+          class="po-md-6"
+          [p-readonly]="isVisualize"
+        ></po-select>
+        <po-textarea 
+          [(ngModel)]="cardDescription" 
+          name="description" 
+          p-label="Descrição" 
+          class="po-md-12"
+          [p-readonly]="isVisualize"
+        ></po-textarea>
+
+        <div class="po-modal-footer po-modal-footer-align-right">
+          <po-button *ngIf="!isVisualize" p-kind="secondary" class="po-button-modal-first-action" p-label="Fechar" (p-click)="closeCardModal()"></po-button>
+          <po-button p-kind="primary" class="po-button-modal-first-action" [p-label]="modalLabel" (p-click)="addEditCard()"></po-button>
+        </div>
+        
+    </po-modal>
+
+    <po-modal
+      #advancedFilterModal
+      [p-primary-action]="advFilterModalAction"
+      p-title="Filtrar"
+      p-size="md"
+      >
+        <po-input 
+          type="number"
+          p-mask="999" 
+          [(ngModel)]="filterId" 
+          name="filterId" 
+          p-label="Id" 
+          class="po-md-6"
+        ></po-input>
+        <po-input 
+          type="text"
+          [(ngModel)]="filterName" 
+          name="cardPower" 
+          p-label="Nome" 
+          class="po-md-6"
+        ></po-input>
+        <po-select 
+          [ngModel]="filterType"
+          (ngModelChange)="filterType = $event"
+          name="filterType" 
+          p-label="Tipo"
+          [p-options]="cardTypeOption"
+          class="po-md-6"
+        ></po-select>
+        <po-select 
+          [ngModel]="filterClass"
+          (ngModelChange)="filterClass = $event"
+          name="filterClass" 
+          p-label="Classe"
+          [p-options]="cardClassOption"
+          class="po-md-6"
+        ></po-select>
+        <span class="reset po-md-2" (click)="resetFilters()"> Limpar filtros </span>
+    </po-modal>
+
+    <po-modal
+      #removeModal
+      [p-primary-action]="removeModalAction"
+      [p-secondary-action]="removeModalSecAction"
+      p-title="Remover"
+      p-size="md"
+      >
+        Deseja remover esta carta?
+    </po-modal>
+</po-page-list>

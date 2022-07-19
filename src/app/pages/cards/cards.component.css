@@ -1,0 +1,19 @@
+::ng-deep .cardModal po-modal-footer {
+  display: none;
+}
+
+::ng-deep .po-modal-footer .po-button {
+  font-size: 1.1em;
+}
+
+.container-header {
+  display: flex;
+  justify-content: end;
+}
+
+.reset{
+  cursor: pointer;
+  color: rgb(117, 51, 153);
+  font-size: 16px;
+  padding: 0 8px;
+}
