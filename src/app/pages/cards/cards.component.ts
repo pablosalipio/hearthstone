@@ -163,13 +163,13 @@ export class CardsComponent implements OnInit {
 
   filterAction(searchFor: string, advFilter: boolean){
     this.isLoading = true;
-    
+
     if(advFilter){
       this.tableItemsFiltered = this.tableItems.filter(card => 
         card.name.includes(this.filterName) &&
         ( !this.filterId || card.id == this.filterId ) &&
         ( !this.filterType || card.type == this.filterType ) &&
-        ( !this.filterClass || card.type == this.filterClass )
+        ( !this.filterClass || card.class == this.filterClass )
       );
 
       this.advancedFilterModal.close();
